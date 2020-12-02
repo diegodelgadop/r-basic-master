@@ -1,0 +1,15 @@
+---
+title: "Ejercicios sobre y \LaTeX Markdown"
+author: "Diego Delgado Palomaredefaults"
+date: "11/9/2020"
+output: pdf_document
+ 
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Instrucciones
+
+En primer lugar, debéis tal cual está ``MiKTeX``.  Necesitaras instalar 

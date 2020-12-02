@@ -1,0 +1,105 @@
+---
+title: "Distribución Uniforme"
+author: "Diego Delgado Palomares"
+date: "10/10/2020"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+# La ditribución uniforme 
+
+##### Una función se dice que distribuye uniforme si esta cumple con  función de densiidad 
+
+$$f(x)= \left\{
+\begin{array}{rl}
+\frac{1}{b-a} & \text{si }~ a \le x \le b
+\\ 0 & \text{en cualquier otro caso}
+\end{array}
+\right.$$
+
+y esta modela el elegir un intervalo $[a , b]$ de manera equiprobable  
+
+La función de distribución es:
+
+$$ F(x)= \left\{
+\begin{array}{rl}
+0 & \text{si }~ x \le a
+\\ \frac{x-a}{b-a} & \text{si }~ a \le x <b
+\\ 1 & \text{si }~ x \ge b
+\end{array}
+\right.$$
+
+
+###### con esperanza 
+
+$\frac{a+b}{2}$
+
+######  y varianza 
+
+$\frac{(b-a)^2}{12}$
+ 
+supongamos que $X\sim U([0,1])$ entonces podemos estudiar sus parámetros
+ 
+ 
+En `R`
+ 
+```{r}
+a=0
+b=1
+
+x = seq(0,1, 0.02)
+
+punif(0.5, min=a, max = b)
+
+
+dunif(0.5, min=a,max = b)
+unif <- runif(500, min = 0, max = b)
+plot(unif, type="l") 
+
+barplot(punif(x,min= a,max= b))
+mean(unif)
+
+
+qunif(.5,a,b)
+
+```
+
+
+#### En  `Python`
+
+```{python}
+from scipy.stats import uniform
+import matplotlib.pyplot as plt
+import numpy as np 
+
+a=0
+b=1
+
+loc = a
+scale = b-a
+
+fig, ax = plt.subplots(1,1)
+mean, var, skew, kurt =  uniform.stats(moments = "mvsk")
+print("Media %f"%mean)
+print("Varianza %f"%var)
+print("Sesgo %f"%skew)
+print("Curtosis %f"%kurt)
+
+
+rv = uniform(loc = loc, scale = scale)
+x = np.linspace(-0.1, 1.1, 120)
+ax.plot(x, rv.pdf(x),"k-", lw = 2, label ="Uniforme en (0,1)")
+r = rv.rvs(size=1000000)
+ax.hist(r, density = True, histtype = "stepfilled", alpha = 0.25)
+ax.legend(loc = "best", frameon = False)
+plt.show()
+
+
+```
+
+ 
+ 

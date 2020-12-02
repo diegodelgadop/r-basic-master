@@ -1,0 +1,45 @@
+---
+title: "Distribucion de Bernoulli"
+author: "Diego Delgado Palomares"
+date: "26/9/2020"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(reticulate)
+
+```
+## Función de densidad de Bernoulli
+
+$$f(k)= p^k(1-p)^{1-k}= \left\{
+\begin{array}{rl}
+     p & \text{si } k=1
+  \\ 1-p & \text{si } k=0
+  \\ 0 &\text{ en cualquier otro caso}
+\end{array}
+\right.$$
+
+### Sea $X = Be(p=0.7)$, la distribución que modela la probabilidad de obener cara con una moneda alterada.
+
+```{r}
+library(Rlab)
+dbern(0,prob = 0.7)
+dbern(1,prob = 0.7)
+pbern(0, prob = 0.7)
+pbern(1, prob = 0.7)
+qbern(0.5, prob = 0.7)
+qbern(0.25, prob = 0.7)
+data <- rbern(1000, prob = 0.7)
+hist(data)
+```
+
+```{python}
+from scipy.stats import bernoulli
+import  mathplotlib.pyplot as plt
+```
+
+
+     

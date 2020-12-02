@@ -1,0 +1,104 @@
+---
+title: "Ejercicios sobre LaTeX, R y Markdown"
+author: "Juan Gabriel Gomila & María Santos"
+date: "30/12/2018"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Instrucciones
+
+En primer lugar, debéis reproducir este documento tal cual está. Necesitaréis instalar [MiKTeX](https://miktex.org/download) y [Texmaker](http://www.xm1math.net/texmaker/).
+
+A continuación de cada pregunta, tenéis que redactar vuestras respuestas de manera correcta y argumentada, indicando qué hacéis, por qué, etc. Si se os pide utilizar instrucciones de `R`, tendréis que mostrarlas todas en chunks.
+
+El objetivo de esta tarea es que os familiaricéis con los documentos Markdown, las fórmulas en \LaTeX\   y los chunks de `R`. Y, de lo más importante, que os acostumbréis a explicar lo que hacéis en cada momento.
+
+# Preguntas
+
+## Pregunta 1
+
+Realizad los siguientes productos de matrices siguiente en `R`:
+
+$$A\cdot B$$
+$$B\cdot A$$
+$$~~(A\cdot B)^t$$
+$$B^t\cdot A$$
+$$~~(A\cdot B)^{-1}$$
+$$A^{-1}\cdot B^t$$
+
+donde
+$$A = \begin{pmatrix}1 & 2 & 3 & 4\\ 4 & 3 & 2 & 1\\ 0 & 1 & 0 & 2\\ 3 & 0 & 4 & 0\end{pmatrix}\qquad B= \begin{pmatrix}4 & 3 & 2 & 1\\ 0 & 3 & 0 & 4\\ 1 & 2 & 3 & 4\\ 0 & 1 & 0 & 2\end{pmatrix}$$
+
+Finalmente, escribe haciendo uso de \LaTeX\  el resultado de los dos primeros productos de forma adecuada.
+
+```{r, echo = T, eval = T}
+A = cbind(c(1,4,0,3),c(2,3,1,0),c(3,2,0,4),c(4,1,2,0))
+B = cbind(c(4,0,1,0),c(3,3,2,1),c(2,0,3,0),c(1,4,4,2))
+A%*%B
+B%*%A
+t(A%*%B)
+t(B)%*%A
+solve(A%*%B)
+solve(A)%*%t(B)
+```
+
+## Pregunta 2
+
+Considerad en un vector los números de vuestro DNI y llamadlo `dni`. Por ejemplo, si vuestro DNI es 54201567K, vuestro vector será $$dni = \begin{pmatrix}5,4,2,0,1,5,6,7\end{pmatrix}$$.
+
+Definid el vector en `R`. Calculad con `R` el vector `dni` al cuadrado, la raíz cuadrada del vector `dni` y, por último, la suma de todas las cifras del vector `dni`.
+
+
+```{r dni}
+#para definir el vector
+dni<- c(9,1,0,6,0,5)
+
+```
+
+```{r dni al cuadrado}
+#aplicar el cuadraado
+dni2<-dni**2
+dni2
+```
+```{r dni raiz cuadrada}
+#aplicar raíz
+dni_raiz<-sqrt(dni)
+dni_raiz
+```
+```{r dni suma}
+#para realizar la suma
+dni_suma<-sum(dni)
+dni_suma
+```
+Finalmente, escribid todos estos vectores también a \LaTeX
+
+Aquí en México el equivalente al `dni` es el `CURP`, ya que el mío comienza así DEPD910605HD..., con o que  armaria el vector $(9,1,0,6,0,5)~~ $ para asignarlo a `R` se escribiría 
+
+$$ dni<-~~ c(9,1,0,6,0,5)$$
+La operación $dni^{2}$
+$$dni2<-~~dni^2$$
+dando como resultado 
+
+$\begin{pmatrix} 81 & 1 & 0 & 36  & 0 & 25 \end{pmatrix}$
+
+La raíz cuadrada da $\begin{pmatrix} 3 & 1 & 0 & 2.449490 & 0 & 2.236068 \end{pmatrix}$
+
+dni_suma<-sum(dni) $21$
+
+
+
+
+
+
+## Pregunta 3
+
+Considerad el vector de las letras de vuestro nombre y apellido. Llamadlo `name`. Por ejemplo, en mi caso sería $$nombre = (M,A,R,I,A,S,A,N,T,O,S)$$.
+
+Definid dicho vector en `R`. Calculad el subvector que solo contenga vuestro nombre. Calculad también el subvector que contenga solo vuestro apellido.
+Ordenadlo alfabéticamente. Cread una matriz con este vector.
+
+Redactad todos vuestros resultados y utilizad \LaTeX

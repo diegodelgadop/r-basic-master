@@ -1,0 +1,73 @@
+---
+title: "Distribución de Poisson"
+author: "Diego Delgado Palomares"
+date: "7/10/2020"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+options(tinytext.verbosse = T)
+```
+
+## Distribución de Poisson
+
+Si $X$ es variable aleatoria que mide el "número de eventos en un cierto intervalo de tiempo", diremos que $X$ se distribuye como una Poisson con parámetro $\lambda$
+
+$$X\sim \text{Po}(\lambda)$$
+donde $\lambda$ representa el número de veces que se espera que ocurra el evento durante un intervalo dado
+
+- El **dominio** de $X$ será $D_X = \{0,1,2,\dots\}$
+
+- La **función de probabilidad** vendrá dada por $$f(k) = \frac{e^{-\lambda}\lambda^k}{k!}$$
+
+## Distribución de Poisson
+ 
+- La **función de distribución** vendrá dada por $$F(x) = \left\{
+\begin{array}{rl}
+     0 & \text{si } x<0 
+  \\ \sum_{k=0}^xf(k) & \text{si } 0\le x<n
+  \\ 1 & \text{si } x\ge n
+\end{array}
+\right.$$ 
+- **Esperanza** $E(X) = \lambda$
+- **Varianza** $Var(X) = \lambda$
+
+
+##### Supongamos que $X$ modela el numero  de errores por página que tiene un valor esperado $\lambda = 5$
+
+## En `R`
+
+```{r}
+L=5
+
+datapois<-dpois(x= 0:20, lambda=L)
+plot(datapois)
+plot(0:20, datapois)
+ppois(0:20, L)
+qpois(0.5,5)
+hist(rpois(1000, lambda = 5))
+```
+
+```{python}
+import numpy as np
+from scipy.stats import poisson
+import matplotlib.pyplot as plt
+
+fig, ax = plt.subplots(1,1)
+mu = 1
+mean, var, skew, kurt =  poisson.stats(mu, moments = "mvsk")
+print("Media %f"%mean)
+print("Varianza %f"%var)
+print("Sesgo %f"%skew)
+print("Curtosis %f"%kurt)
+
+x = np.arange(0, 5)
+ax.plot(x, poisson.pmf(x, mu), "bo", ms=8, label = "Poisson (0.8)")
+ax.vlines(x,0,poisson.pmf(x,mu), colors = "b", lw = 4, alpha = 0.5)
+ax.legend(loc = "best", frameon = False)
+plt.show()
+```
+
+
+

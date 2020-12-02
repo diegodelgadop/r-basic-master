@@ -1,0 +1,130 @@
+---
+title: "Tablas de contingencia"
+author: "Diego Delgado Palomares"
+date: "17/9/2020"
+output:
+  pdf_document: default
+  html_document: default
+--- 
+# Tablas de Contingencia 
+
+```{r}
+datos <- factor(sample(c("H","M"), size = 8, replace = T)) 
+table(datos)
+table(datos)["M"]
+sum(table(datos))
+```
+# Tablas de frecuencias unidimencionales 
+
+```{r}
+x <- sample(1:5, size = 12,replace = T)
+respuestas <- sample(c("sí","no"), size = 15, replace = T)
+prop.table(x)
+prop.table(table(x))
+prop.table(table(respuestas))
+names(which(table(x)==max(table(x))))
+
+```
+```{r}
+datos <- c(rep("H",6),rep("M",14))
+table(datos)
+prop.table(table(datos))
+names(which(table(datos)==max(table(datos))))
+```
+# Frecuencias Relativas
+
+$$f_i = \frac{n_i}{n}$$
+```{r}
+prop.table(table(datos))
+table(datos)/length(datos)
+moda= function(d){
+  c(names(which(table(d)==max(table(d))))," y aparece ",sum(max(table(d))),"veces")
+}
+m_d <- moda(datos)
+```
+la moda del data frame es `r m_d`
+
+# Tablas de frecuencias Bidimensionales
+
+```{r}
+sexo <- sample(c("H","M"), size = length(respuestas), replace = T)
+sexo
+
+table(respuestas, sexo)
+
+```
+### Tabla de frecuencia relativa global
+```{r}
+
+prop.table(table(respuestas,sexo))
+```
+
+### Tabla de frecuencias marginales
+
+Con margin = 1 obtenemos la tabla de frecuencias marginales por fila 
+```{r }
+prop.table(table(respuestas,sexo), margin = 1)
+```
+y con margin = 2, por columnas
+
+```{r }
+prop.table(table(respuestas,sexo), margin = 2)
+```
+
+```{r}
+library(gmodels)
+sexo = factor(c(sample(c("H","M"),size = 12,replace = T)))
+ans <- factor(c(sample(c(0,1),size = length(sexo),replace = T)))
+ans<- factor(ans, levels = c(0,1), labels = c("si","no"))
+ans
+CrossTable(sexo, ans, prop.chisq = F)
+tt <- table(sexo, ans)
+pt <- prop.table(table(sexo,ans))
+tt
+pt
+rowSums(tt)
+colSums(tt)
+rowSums(pt)
+colSums(pt)
+prop.table(tt, margin = 1) # frecuencia relativa por sexo 
+prop.table(tt, margin = 2) # frecuencia relativa por respuesta 
+apply(tt, FUN = sum, MARGIN = 1)
+apply(tt, FUN = sum, MARGIN = 2)
+```
+
+# Multivariante
+
+
+### Datos multidimensionales 
+
+```{r}
+
+ans1 <- sample(c(0,1), size = 100, replace = T)
+ans <- factor(ans1, levels = c(0,1), labels = c("si","no"))
+sex <- sample(c("hombre", "mujer"), size = length(ans), replace = T)
+places <- sample(c("CDMX","ESTADO","TLAXCALA","PUEBLA","VERACRUZ"), size = length(ans),replace = T)
+table(sex,ans,places)
+table(ans,sex,places)
+ftable(sex,ans,places)
+cumsum(prop.table(ftable(sex,ans,places)))
+```
+
+### Filtrar tablas 
+
+```{r}
+
+ttt<-(table(sex,ans,places))
+```
+
+### Frecuencias relativas 
+
+```{r}
+prop.table(ttt) # frecuencia relativa global
+prop.table(ttt, margin = 1)  #frecuencia relativa marginal respectp a sexo 
+prop.table(ttt, margin = 2)  #frecuencia relativa marginal respecto a respuesta
+prop.table(ttt, margin = 3)  #frecuencia relativa marginal respecto a estado
+prop.table(ttt, margin = c(1,2)) # frecuencia relativa marginal por sexo y respuestaa
+ftable(prop.table(ttt, margin = c(1:3)))
+```
+
+

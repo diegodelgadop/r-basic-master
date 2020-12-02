@@ -1,0 +1,79 @@
+---
+title: "Ejemplo final"
+author: "Diego Delgado Palomares"
+date: "23/9/2020"
+output: pdf_document
+---
+
+# Ejemplo final 
+
+## Juntar color de ojos y pelo sin distinguir por sexo 
+
+```{r}
+ftable(HairEyeColor)
+Male <- HairEyeColor[,,"Male"]
+Female <- HairEyeColor[,,"Female"]
+data <- as.table(Male+Female)
+data
+```
+
+```{r}
+dimnames(data) <- list(
+  pelo = c("negro", "café", "pelirojo","rubio"),
+  Ojos = c("cafes", "Azules", "Avellana","verdes"))
+  
+dimnames(data)  
+data
+```
+
+
+```{r}
+mosaicplot(data, color =c("red3","green", "blue","wheat","tan"), main = "diagrama de mosaico"
+           )
+```
+# Datos numéricos
+
+## ¿cuántas personas hay en la muestra?
+```{r}
+sum(data)
+```
+
+# Tablas de frecuencias absolutas y relativa de cada variable 
+
+```{r}
+colSums(data)
+rowSums(data)
+prop_ojos <-round(prop.table(colSums(data)),3)
+prop_cabello <-round(prop.table(rowSums(data)),3)
+```
+
+# representaremos estas frecuencias relativas con dos barplots 
+
+
+
+```{r diagrama de barras para ojos}
+
+barplot(prop_ojos, main = "frecuencias relativas para \"ojos\"",
+        col= c("burlywood4","blue","orange4","green"), width  = c(1,1,1,1), ylim =c(0,.4))
+
+```
+```{r barplot para cabello}
+barplot(prop_cabello, main = "frecuencias relativas para \"Cabello\"", col = c("black","burlywood4","darkred","gold3"), ylim = c(0, .5))
+
+```
+# Frecuencias relativas globales
+
+```{r}
+round(prop.table(data),3)
+round(prop.table(data, margin = 1), 3)
+round(prop.table(data, margin = 2), 3)
+
+barplot(round(prop.table(data, margin = 1), 4), main = "marginal por color de cabello",beside = T, col = c("black","burlywood4","darkred","gold3"), legend.text = T, ylim = c(0,.8))
+
+barplot(round(t(prop.table(data, margin = 2)), 4), main = "Marginal por color de ojos", beside = T,
+        col = c("burlywood4","blue2", "orange4","green"),legend.text = T, ylim = c(0,0.6))
+
+```
+
+
+

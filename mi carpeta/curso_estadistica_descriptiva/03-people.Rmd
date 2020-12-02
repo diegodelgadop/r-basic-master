@@ -1,0 +1,31 @@
+---
+title: "03-people"
+author: "Diego Delgado Palomares"
+date: "18/9/2020"
+output: pdf_document
+---
+
+# Ejemplo de color de ojos y cabello
+
+```{r}
+str(HairEyeColor)
+ftable((prop.table(HairEyeColor,margin = 2)))
+ftable(prop.table(HairEyeColor, margin = 2:3))
+```
+
+```{r}
+
+aperm(HairEyeColor,c("Sex","Hair","Eye"))
+```
+
+```{r}
+
+library(kableExtra)
+kable(prop.table(HairEyeColor,margin = 3))
+```
+
+```{r}
+
+
+```
+

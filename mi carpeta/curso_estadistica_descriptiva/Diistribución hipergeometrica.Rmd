@@ -1,0 +1,79 @@
+---
+title: "Distribución hipergeométrica"
+author: "Diego Delgado Palomares"
+date: "7/10/2020"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+options(tinytext.verbosse = T)
+```
+
+# Distribución hipergeométrica
+z
+$$X \sim H, (\textit{N, M, n ))}
+$$
+
+-  la funcion de densidad es 
+$$f(k)=  \frac{{N\choose{k}}   {M\choose{n-k}}}{{{N+M}\choose{n}})}  $$
+
+-  La función de distribución es 
+
+$$ F(x)=  \left\{
+\begin{array}{rl}
+0 & ~\text{si }x~<0\\
+\sum_{k=0}^{x}f(k) & ~\text{si } 0 ~\le 
+x~<~n \\
+1 &~ \text{si } x~ \ge n
+\end{array}
+\right.
+$$
+
+##### Esperanza $E(X) ~ = ~ \frac{nN}{N+M}$
+
+##### Varianza $Var(X)~ = ~ \frac{nNM}{(N+M)^2} \cdot \frac{N+M-n}{N+M-1}$
+
+Supongamos que tendemos 20 animales, 7 son perros y los demás, no lo son.
+
+¿cómo medir la probabilidad de encontrar un número  de perros al azar si elegimos $x=12$ animales ? 
+
+# en `R`
+```{r}
+library(Rlab)
+M=7
+N=13
+K=12
+dhyper(x=0:20,m=7,n = 13, k=K)
+phyper(q=0:12,m=M,n=N, k=K)
+qhyper(p=.5, m=M,n=N,k=K)
+data =rhyper(nn=10000, m=M, n=N, k=K)
+plot(data, breaks = 8)
+
+```
+
+
+## En Python
+
+
+```{python}
+from scipy.stats import hypergeom
+import matplotlib.pyplot as plt
+import numpy as np
+
+[M, n, N] = [20, 7, 12]
+rv =  hypergeom(M, n, N)
+x = np.arange(0, n+1)
+y = rv.pmf(x)
+
+fig =  plt.figure()
+ax = fig.add_subplot(111)
+ax.plot(x,y, "bo" )
+ax.vlines(x,0,y, lw= 2, alpha =  0.8)
+ax.set_xlabel("Número de perros entre los doce elegidos")
+ax.set_ylabel("Distribución de probabilidad hypergeométrica de (20,7,12)")
+plt.show()
+
+
+```
+
